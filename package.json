@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/garyonex/BackEnd-Coderhouse#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "moment": "^2.29.3"
   }
 }
