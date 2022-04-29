@@ -5,7 +5,17 @@ class container {
         this.coundId = 0;
         this.content = [];
     }
-
+    async init() {
+        try {
+            const data = await fs.promises.readFile(this.file); //no se si es esta promesa la que me genera el bucle.!
+            this.list = JSON.parse(data);
+            for (const element of this.content) {
+                if (element.id > this.countId) this.countId = element.id;
+            }
+        } catch (error) {
+            console.log('No se encontro el archivo!!, generando...');
+        }
+    }
     //Escribir, sobre escribir el contenido
     async write() {
         await fs.promises.writeFile(

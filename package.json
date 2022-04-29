@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon ./js/clase_6/servidor.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,7 +12,7 @@
     "url": "git+https://github.com/garyonex/BackEnd-Coderhouse.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Gary Calle",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/garyonex/BackEnd-Coderhouse/issues"
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/garyonex/BackEnd-Coderhouse#readme",
   "dependencies": {
     "express": "^4.17.3",
-    "moment": "^2.29.3"
+    "moment": "^2.29.3",
+    "nodemon": "^2.0.15"
   }
 }
