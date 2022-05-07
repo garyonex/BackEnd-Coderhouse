@@ -1,114 +1,88 @@
 const fs = require('fs');
 
-class containerDesa {
+class constDesafio {
+    constructor() {}
 
-    constructor(nombreArchivo) {
-
-        this.fileName = nombreArchivo;
-        this.contenido = [];
-
-
-        this.leerArchivo()
-
-    }
-
-    leerArchivo() {
-
+    async leerArchivo(file_path) {
         try {
-
-            if (fs.existsSync(this.fileName)) {
-                const data = fs.readFileSync(this.fileName, 'utf-8');
-                this.contenido = JSON.parse(data);
+            if (fs.existsSync(file_path)) {
+                console.log(' el archivo existe');
+                return false;
+            } else {
+                console.log('Estamos creando archivo');
+                await fs.readFileSync(file_path, 'utf-8');
+                return true;
             }
-
         } catch (error) {
             console.log('Error al leer el archivo', error);
+            return false;
         }
     }
-
-    escribirArchivo(contenido) {
-
+    //Escribir o sobreEscribir
+    escribirArchivo(arrayProductos, file) {
+        let json = JSON.stringify(arrayProductos);
         try {
-            fs.writeFileSync(this.fileName, JSON.stringify(contenido))
+            fs.writeFileSync(file, json);
         } catch (error) {
             console.log('Error al escribir el archivo', error);
         }
     }
-
-    getAll() {
-        return this.contenido;
+    //Buscar todos
+    getAll(file) {
+        let todosProductosArray = this.read(file);
+        return todosProductosArray;
     }
 
-    getById(id) {
+    //Buscar por Id
+    getById(id, file) {
+        let todosProductosArray = this.read(file);
+        let producto = todosProductosArray.find((element) => element.id == id);
 
-        let producto = {}
-        producto = this.contenido.find(element => element.id == id);
-        if (!producto) {
-            producto = null
+        return producto ? producto : null;
+    }
+    read(file) {
+        let todosProductosArray = [];
+        try {
+            todosProductosArray = fs.readFileSync(file, 'utf8');
+            todosProductosArray.length > 0
+                ? (todosProductosArray = JSON.parse(todosProductosArray))
+                : (todosProductosArray = []);
+        } catch (error) {
+            console.log('error', error);
         }
-        return producto
+        return todosProductosArray;
     }
-
-    save(producto) {
-
+    //Guardar un archivo nuevo
+    save(producto, file) {
         //  obtengo ultimo id + 1
-        const id = this.contenido.length + 1;
-        producto["id"] = id;
+        let nextId = this.nuevoId(file);
+        producto['id'] = id;
         //  actualizo el contenido con el nuevo producto
-        this.contenido.push(producto);
+        const todosProductosArray = this.read(file);
+        todosProductosArray.push(producto);
         //  Grabo el archivo nuevamente
-        this.escribirArchivo(this.contenido);
-
-        return `El id del objeto añadido es ${id}`
+        this.escribirArchivo(todosProductosArray, file);
     }
-
+    //eliminar uno
     deleteById(id) {
-
-        const contenidoNuevo = this.contenido.filter(element => element.id !== id)
+        const contenidoNuevo = this.contenido.filter(
+            (element) => element.id !== id
+        );
         this.escribirArchivo(contenidoNuevo);
-
     }
-
+    //Eliminar todo
     deleteAll() {
         const contentido = [];
-        this.contenido = contentido
+        this.contenido = contentido;
         this.escribirArchivo(this.contenido);
     }
-
+    nuevoId(file) {
+        let lastId = 0;
+        let todosProductosArray = this.read(file);
+        if (todosProductosArray.length > 0) {
+            lastId = todosProductosArray[todosProductosArray.length - 1].id;
+        }
+        return lastId + 1;
+    }
 }
-
-
-const contenedor = new containerDesa('products.txt');
-
-// contenedor.save({
-//     title: "Tomate",
-//     price: 80.20,
-//     thumbnail: "toamte.jpg"
-// });
-
-// contenedor.save({
-//     title: "Cebolla",
-//     price: 141.23,
-//     thumbnail: "cebolla.jpg"
-// });
-
-// contenedor.save({
-//     title: "Papa",
-//     price: 11.23,
-//     thumbnail: "papa.jpg"
-// });
-
-// contenedor.save({
-//     title: "Remolacha",
-//     price: 16.23,
-//     thumbnail: "remolacha.jpg"
-// });
-
-// contenedor.save({
-//     title: "Naranja",
-//     price: 1.23,
-//     thumbnail: "naranja.jpg"
-// });
-
-console.log('Todos los productos',contenedor.getAll());
-module.exports = containerDesa;
+module.exports = constDesafio;

@@ -24,8 +24,8 @@
 //! Instalamos antes desde el terminar con npm express
 const fs = require('fs')
 const express = require('express');
-const container = require('./contDesafio');
-const contProductos =new container ('./products.txt')
+const ContenedorDesa = require('./contDesafio');
+let productos= null
   
 const appExp = express();
 const PORTExp = 8080;
@@ -45,7 +45,11 @@ const mensaje = () => {
         return 'Buenas noches';
     }
 };
-
+function init(){
+    console.log('Iniciando');
+    productos=  productosTotal();
+    console.log('Productos Cargados:' , productos);
+}
 //En el home del server aparecera un mensaje en azul
 appExp.get('/', (req, res) => {
     res.send(`<h1 style="color: blue;">Bienvenidos</h1>${mensaje()}`);
@@ -61,24 +65,30 @@ appExp.get('/visitas', (req, res) => {
 appExp.get('/fyh', (req, res) => {
     res.send({ fyh: new Date().toLocaleString() });
 });
-const save = contProductos.save({title:'Mandarina', price:1200, thumbnail: 'mandarina.png', id:4}) //modificar siempre para agregar nuevos productos
-    console.log (`Nuevo item ${save}`);
+    
 //!DESAFIO SERVIOR GLICH
 appExp.get('/productos', (req, res) => {
-  try {
-      const prod= contProductos.getAll()
-      res.send(`Productos mostrados ${JSON.stringify(prod)}`)
-  } catch (error) {
-      res.send('Ocurrio un error')
-  } 
+ res.send(productos)
+  console.log(productos)
 });
 
 appExp.get('/productosRandom', (req, res) => {
-    const id= Math.floor(Math.random() * contProductos.getAll().length ) 
-    try {
-        const random = contProductos.getById(id)
-        res.send(`El id ${id}, ${JSON.stringify(random)}`)
-    } catch (error) {
-        res.send(`Error al cargar productos random id ${error}`)
-    }
+ res.send(productoRandom())
+  
 });
+function productosTotal(){
+    const container = new ContenedorDesa();
+    const file = './products.txt';
+    const allProductsArray = container.read(file);
+    return allProductsArray;
+}
+
+function productoRandom () {
+    const container = new ContenedorDesa();
+    const file = './products.txt';
+    const allProductsArray = container.read(file);
+    const randomIndex = Math.floor(Math.random() * allProductsArray.length);
+    return allProductsArray[randomIndex];
+}
+
+init()
