@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>BIENVENIDOS</h1>
+        <h2>Mascotas</h2>
+        <form action="/mascotas" method="post">
+            Nombre: <input type="text" name="nombre" /> Raza:
+            <input type="text" name="raza" /> Edad:
+            <input type="number" name="edad" />
+            <button>AGREGAR</button>
+        </form>
+        <h2>Personas</h2>
+        <form action="/personas" method="post">
+            Nombre: <input type="text" name="nombre" /> Apellido:
+            <input type="text" name="apellido" /> Edad:
+            <input type="number" name="edad" />
+            <button>AGREGAR</button>
+        </form>
+        <!-- <h3>Cargar un archivo</h3>
+        <form action="/uploadfile" method="post" enctype="multipart/form-data">
+            Seleciona una:
+            <input type="file" name="myFile" />
+            <input type="submit" value="Upload a file" />
+        </form> -->
+        <h3>Cargar varios archivos</h3>
+        <form action="/uploadfile" method="post" enctype="multipart/form-data">
+            Selecciona tus imagenes:
+            <input type="file" name="myFile" multiple />
+            <input type="submit" value="Upload your files" />
+        </form>
+    </body>
+</html>
