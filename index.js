@@ -7,6 +7,8 @@ const routes = require('./js/clase_7/routes');
 const routerEjemplo = require('./js/clase_7/ejemplo');
 const routesMascotas = require('./js/clase_8/routesMascota');
 const routesPersonas = require('./js/clase_8/routesPersonas');
+const routesAfter = require('./js/clase_8/routesAfter')
+const routeProductos = require('./js/clase_8/desafio_4/routes/routesProduct')
 // const routesUpload = require('./js/clase_8/routesUpload')
 const frase = ' hola mundo bienvenidos ';
 
@@ -20,7 +22,7 @@ const storage = multer.diskStorage({
 });
 //! middlewares
 
-// //Para cargar una
+// //Para cargar un archivo
 // app.use(
 //     multer({
 //         dest: __dirname + '/public/files',
@@ -50,9 +52,9 @@ const server = app.listen(PORT, () => {
     console.log(`Servidor en puerto ${PORT}`);
 });
 
-app.get('/api/frase', (req, res) => {
-    res.send(frase);
-});
+// app.get('/api/frase', (req, res) => {
+//     res.send(frase);
+// });
 
 //* utilizando multer
 //Para cargar
@@ -66,3 +68,5 @@ app.use(routes);
 app.use(routerEjemplo);
 app.use('/mascotas', routesMascotas);
 app.use('/personas', routesPersonas);
+app.use('/after', routesAfter)
+app.use('/desafio', routeProductos)

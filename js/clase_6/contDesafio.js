@@ -56,7 +56,7 @@ class constDesafio {
     save(producto, file) {
         //  obtengo ultimo id + 1
         let nextId = this.nuevoId(file);
-        producto['id'] = id;
+        producto['id'] = nextId;
         //  actualizo el contenido con el nuevo producto
         const todosProductosArray = this.read(file);
         todosProductosArray.push(producto);

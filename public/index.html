@@ -34,5 +34,16 @@
             <input type="file" name="myFile" multiple />
             <input type="submit" value="Upload your files" />
         </form>
+        <h3>Cargar productos</h3>
+        <form
+            action="/api/productos"
+            method="post"
+            enctype="multipart/form-data"
+        >
+            Title <input type="text" name="title" />
+            Price <input type="text" name="price" />
+            Thumbnail <input type="file" name="thumbnail" />
+            <input type="submit" value="Upload your products" />
+        </form>
     </body>
 </html>
